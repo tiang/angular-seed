@@ -10,19 +10,22 @@ angular.module('myApp', ['ui.router'])
   // Now set up the states
   $stateProvider
     .state('state1', {
-      url: "/state1",
+      url: "/state1/:isLoggedIn",
       templateUrl: "partials/state1.html",
       controller:"state1Controller",
       resolve:  {
-            myObject: function($q, $timeout) {
+            myObject: function($q, $state, $stateParams, $timeout) {
                 var q = $q.defer();
                 console.log('calling myObject resolve')
                 $timeout( function() {
                     console.log('timer executed');
-                    var user = {name: "tiang", loggedin: true}
+                    var user = {name: "tiang", loggedin: $stateParams.isLoggedIn === "true"}
   
-                    q.resolve(user)
-                }, 2000);
+                    if (user.loggedin)
+                        q.resolve(user)
+                    else
+                        $state.go('state2')
+                }, 10);
                 return q.promise;
             },
             myInstantUser: function(){
@@ -39,8 +42,13 @@ angular.module('myApp', ['ui.router'])
       }
     })
     .state('state2', {
-      url: "/state2",
-      templateUrl: "partials/state2.html"
+      url: "/state2/:id",
+      templateUrl: "partials/state2.html",
+      controller: function($state) {
+          console.log('entering state 2')
+          console.log($state);
+          console.log('id: ' + $state.params.id);
+      }
     })
     .state('state2.list', {
       url: "/list",
@@ -55,25 +63,9 @@ angular.module('myApp', ['ui.router'])
     console.log(myObject.name)
     console.log(myInstantUser);
     $scope.user = myObject
+    
+    $scope.goToState2 = function() {
+        $state.go("state2", {id: 8})
+    }
 })
 ;
-
-
-
-// <a href="/hello">
-
-// /#/****path*****
-
-// resolve login 
-// controller:
-// view
-// onEnter
-
-
-// {
-//     url: "/state1",
-//     templateUrl: "partials/state1.html",
-//     template: "<div>Hllo</div>"
-//     controller: function() {},
-//     controller: 'state1Controller'
-// }
