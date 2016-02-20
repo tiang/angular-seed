@@ -28,7 +28,7 @@
         border:1px solid black;
     }
 </style>
-<div ng-repeat="aPerson in people" ng-class="{'blackbox':search.name.indexOf(aPerson.name) > 0} " ng-if="true">
+<div ng-repeat="aPerson in people" ng-class="{'blackbox':$index==search.index } " ng-if="true">
     <p> {{$index}}: This is {{ aPerson.name }} {{aPerson.lastname}} This is their age {{aPerson.age}} </p>
     <!--<p>this is my person object {{people[$index]}}</p>-->
 </div>
