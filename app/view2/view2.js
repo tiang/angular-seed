@@ -28,14 +28,10 @@ angular.module('myApp.view2', ['ngRoute'])
 
 .filter('currencyNumber', ['$filter',function($filter) {
     return function(input, numberOfChar, currencySymbol) {
-        console.log(input)
-        console.log("number of Characters:" + numberOfChar)     
-        console.log("currencySymbol:" + currencySymbol)
-        
-        //first round to number of characters
-        var roundedValue = $filter('number')(input, numberOfChar);
-       var currencyValue = $filter('currency')(roundedValue, currencySymbol);
-        
+
+        var currencyValue = $filter('currency')(input, currencySymbol,numberOfChar);
+
+
         var returnValue = currencyValue;
         return returnValue
     }

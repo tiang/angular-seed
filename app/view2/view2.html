@@ -3,9 +3,9 @@
 <p>This is the partial for view 2.</p>
 <p ng-bind="myNumber = 55555.123456789"> {{name | capitalise : 0}} </p>
 
-<p> Currency Filter {{myNumber | currency:currencySymbol}} </p>
-<p> {{ myNumber  | number:roundingTo}}</p>
-<p> {{ myNumber | currencyNumber:roundingTo:currencySymbol}}</p>
+<p> Currency Filter {{myNumber | currency:currencySymbol:roundingTo}} </p>
+<p> Number Filter: {{ myNumber  | number:roundingTo}}</p>
+<p> My custom CurrencyNumber Filter: {{ myNumber | currencyNumber:roundingTo:currencySymbol}}</p>
 
 <input ng-model="name" placeholder="Please enter your name">
 <input ng-model="roundingTo" placeholder="Please enter rounding number">
