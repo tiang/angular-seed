@@ -1,1 +1,35 @@
-<p>This is the partial for view 1.</p>
+<!--<div ng-if="false">
+    <p>This is the partial for view 1.</p>
+    <p> This is my person object {{person}}</p>
+    <p> This is my name {{ person.name }} </p>
+    <p> This is my age {{person.age}} </p>
+</div>
+
+
+
+<input ng-model="person.age" placeholder="Please enter your age">
+<input ng-model="person.name" placeholder="Please enter your name">
+
+<button ng-click="turnOnWatch()" >Turn on Watch</button>
+<button ng-click="turnOffWatch()" >Turn off Watch</button>-->
+
+
+<input ng-model="search.$" placeholder="Search any field">
+<br>
+<input ng-model="search.name" placeholder="Search for a person">
+<br>
+<input ng-model="search.lastname" placeholder="Last Name search">
+<br>
+<input ng-model="search.age" placeholder="Age search">
+<br>
+<input ng-model="search.index" placeholder="Index Search">
+<style>
+    .blackbox {
+        border:1px solid black;
+    }
+</style>
+<div ng-repeat="aPerson in people" ng-class="{'blackbox':search.name.indexOf(aPerson.name) > 0} " ng-if="true">
+    <p> {{$index}}: This is {{ aPerson.name }} {{aPerson.lastname}} This is their age {{aPerson.age}} </p>
+    <!--<p>this is my person object {{people[$index]}}</p>-->
+</div>
+

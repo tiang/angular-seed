@@ -9,6 +9,15 @@ angular.module('myApp.view2', ['ngRoute'])
   });
 }])
 
-.controller('View2Ctrl', [function() {
+.controller('View2Ctrl', ['$scope', function($scope) {
+    $scope.currencySymbol = '£';
+    
+    
+}])
 
-}]);
+.filter('capitalise', function() {
+    return function(input) {
+        console.log(input)
+      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+});
