@@ -16,9 +16,9 @@
 </head>
 <body>
   <ul class="menu">
-    <li><a ui-sref="state1">State 1</a></li>
-    <li><a ui-sref="state2">State 2</a></li>
-    <li	><a ui-sref="state1.list">State 1 List</a></li>
+    <li><a ui-sref="state1({isLoggedIn: true })">State 1</a></li>
+    <li><a ui-sref="state2({id:8888888})">State 2</a></li>
+    <li	><a ui-sref="state1.list({isLoggedIn: true })">State 1 List</a></li>
   </ul>
 
   <!--[if lt IE 7]>
@@ -42,5 +42,6 @@
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+  <script src="components/firebase-service.js"></script>
 </body>
 </html>

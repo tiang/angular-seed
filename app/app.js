@@ -56,6 +56,11 @@ angular.module('myApp', ['ui.router'])
       controller: function($scope) {
         $scope.things = ["A", "Set", "Of", "Things"];
       }
+    })
+    .state('chat', {
+      url: "/chat",
+      templateUrl: "partials/chat.html",
+      controller: 'ChatAppController'
     });
 })
 .controller('state1Controller', function($state, $scope, myObject, myInstantUser) {
