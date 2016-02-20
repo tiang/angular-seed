@@ -16,8 +16,27 @@ angular.module('myApp.view2', ['ngRoute'])
 }])
 
 .filter('capitalise', function() {
-    return function(input) {
+    return function(input, numberOfChar) {
         console.log(input)
-      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        console.log("nubmer of Characters:" + numberOfChar)
+        
+        //  variableEvaluatesToTrue ? uppercase logic : default case;
+        
+      return (!!input) ? input.charAt(numberOfChar).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
-});
+})
+
+.filter('currencyNumber', ['$filter',function($filter) {
+    return function(input, numberOfChar, currencySymbol) {
+        console.log(input)
+        console.log("number of Characters:" + numberOfChar)     
+        console.log("currencySymbol:" + currencySymbol)
+        
+        //first round to number of characters
+        var roundedValue = $filter('number')(input, numberOfChar);
+       var currencyValue = $filter('currency')(roundedValue, currencySymbol);
+        
+        var returnValue = currencyValue;
+        return returnValue
+    }
+}]);
