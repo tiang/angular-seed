@@ -1,5 +1,12 @@
-Hello World
+<h1>{{title}}</h1>
 
-{{title}}
 <br>
 {{url}}
+
+<br>
+<input ng-model="chat.message" placeholder="My Messages">
+<button ng-click="submit(chat.message)">Submit Message</button>
+
+<div ng-repeat="message in messages track by $index">
+	    <span>{{message}}</span>
+</div>

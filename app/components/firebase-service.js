@@ -18,25 +18,15 @@ angular.module('myApp')
     }
 })
 .controller('ChatAppController', function($scope,FirebaseService) {
-    $scope.title= "Hello Chat App"
-    $scope.url = FirebaseService.firebaseURL;
-    console.log(FirebaseService.getTitle());
     FirebaseService.setTitle('My New Title')
-    console.log(FirebaseService.getTitle());
+
+    $scope.url = FirebaseService.firebaseURL;
+    $scope.title = FirebaseService.getTitle()
+    $scope.chat = {message: ""} 
+    $scope.messages = []
+    
+    $scope.submit = function(msgToSave) {
+        console.log('saving...' + msgToSave)
+        $scope.messages.push(msgToSave);
+    }
 });
-
-
-/****  App Route  ****/
-// .state('chat', {
-//     url: "/chat",
-//     templateUrl: "partials/chat.html",
-//     controller: 'ChatAppController'
-// });
-
-
-/****  HTML  ****/
-// Hello World
-
-// {{title}}
-// <br>
-// {{url}}
