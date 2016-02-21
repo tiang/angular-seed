@@ -22,28 +22,31 @@ angular.module('myApp')
         getTitle2: this.serviceTitle
     }
 })
-.controller('ChatAppController', function($scope,$timeout,FirebaseService) {
+.controller('ChatAppController', function($scope,$timeout,$firebaseArray,FirebaseService) {
     FirebaseService.setTitle('My New Title')
     
     
-          var ref = new Firebase(FirebaseService.firebaseURL).child("ChatApp").child("Title");
+    var ref = new Firebase(FirebaseService.firebaseURL);
+    
+    ref.child("ChatApp").child("Title").on("value", function(data) {
+        if (data == null)
+            return;
+        $timeout(function() {
+            $scope.title = data.val();
+        })           
+    })  
+    
+    $scope.messages = $firebaseArray(ref.child("ChatApp").child("Messages"))
             
-            ref.on("value", function(data) {
-                if (data == null)
-                    return;
-                $timeout(function() {
-                    $scope.title = data.val();
-                })           
-            })  
-            
-
     $scope.url = FirebaseService.firebaseURL;
     $scope.title = FirebaseService.getTitle()
     $scope.chat = {message: ""} 
-    $scope.messages = []
     
     $scope.submit = function(msgToSave) {
         console.log('saving...' + msgToSave)
-        $scope.messages.push(msgToSave);
+        $scope.chat["message"] = ""
+        $scope.messages.$add({
+            text: msgToSave
+        });
     }
 });
