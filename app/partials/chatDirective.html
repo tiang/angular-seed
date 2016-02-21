@@ -1,5 +1,5 @@
 
-<h2> This is my chat window. Lets talk to each other!</h2>
+<h2> {{title}}</h2>
 <input ng-model="chat.message" placeholder="My Messages">
 <button ng-click="submit(chat.message)">Submit Message</button>
-<div class="chat-message" chat-text="message.text"  ng-repeat="message in twoWayMessages | orderBy: '$index': true track by $index "></div>
+<chat-message-component class="" chat-text="message.text"  ng-repeat="message in twoWayMessages track by $index "></chat-message-component>

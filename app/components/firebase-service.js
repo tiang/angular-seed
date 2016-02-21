@@ -22,40 +22,58 @@ angular.module('myApp')
         getTitle2: this.serviceTitle
     }
 })
-.directive('chatMessage', function() {
-    return {
-        templateUrl: 'partials/chatMessage.html',
-        restrict: 'AC',
-        controller: function() {
-         
-        },
-        scope: {
-            text: "=chatText"
-        },
-        link: function(scope, element, attrs)  {
-            console.log(scope.text);
-            console.log(scope.chatText);
+// .directive('chatMessage', function() {
+//     return {
+//         templateUrl: 'partials/chatMessage.html',
+//         restrict: 'AC',
+//         controller: function($scope) {
+//          	//   $scope.count 
+//         },
+//         scope: {
+//             text: "=chatText"
+//             //1. "@"   (  Text binding / one-way binding )
+//             // 2. "="   ( Direct model binding / two-way binding )
+//             // 3. "&"   ( Behaviour binding / Method binding  )
 
-        }
-  };
+//         },
+//         link: function(scope, element, attrs)  {
+//             console.log(scope.text);
+//             console.log(scope.chatText);
+
+//         }
+//   };
+// })
+.component('chatComponent', {
+    templateUrl: 'partials/chatDirective.html',
+    controller: 'ChatAppController'
 })
+.component('chatMessageComponent', {
+    templateUrl: 'partials/chatMessage.html',
+    bindings: {
+        text: "=chatText"
+    },
+    controller: 'ChatAppMessageController as $ctrl'
+})
+// .directive('chatDirective', function() {
+//     return {
+//         templateUrl: 'partials/chatDirective.html',
+//         restrict: 'E',
+//         controller: 'ChatAppController',
+//         scope: { },
+//         link: function(scope, element, attrs)  {
 
-.directive('chatDirective', function() {
-    return {
-        templateUrl: 'partials/chatDirective.html',
-        restrict: 'E',
-        controller: 'ChatAppController',
-        scope: {
-
-        },
-        link: function(scope, element, attrs)  {
-
-        }
-  };
+//         }
+//   };
+// })
+.controller('ChatAppMessageController', function($scope) {
+    $scope.$watch('text', function(value) {
+        if (value == null)
+            return
+        debugger;
+    })
 })
 .controller('ChatAppController', function($scope,$timeout,$firebaseObject,$firebaseArray,FirebaseService) {
     FirebaseService.setTitle('My New Title')
-    
     
     var ref = new Firebase(FirebaseService.firebaseURL);
     
