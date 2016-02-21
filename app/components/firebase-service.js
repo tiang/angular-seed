@@ -22,7 +22,38 @@ angular.module('myApp')
         getTitle2: this.serviceTitle
     }
 })
-.controller('ChatAppController', function($scope,$timeout,$firebaseArray,FirebaseService) {
+.directive('chatMessage', function() {
+    return {
+        templateUrl: 'partials/chatMessage.html',
+        restrict: 'AC',
+        controller: function() {
+         
+        },
+        scope: {
+            text: "=chatText"
+        },
+        link: function(scope, element, attrs)  {
+            console.log(scope.text);
+            console.log(scope.chatText);
+
+        }
+  };
+})
+
+.directive('chatDirective', function() {
+    return {
+        templateUrl: 'partials/chatDirective.html',
+        restrict: 'E',
+        controller: 'ChatAppController',
+        scope: {
+
+        },
+        link: function(scope, element, attrs)  {
+
+        }
+  };
+})
+.controller('ChatAppController', function($scope,$timeout,$firebaseObject,$firebaseArray,FirebaseService) {
     FirebaseService.setTitle('My New Title')
     
     
@@ -38,6 +69,10 @@ angular.module('myApp')
     
     $scope.messages = $firebaseArray(ref.child("ChatApp").child("Messages"))
             
+    var twowayRef = $firebaseObject(ref.child("ChatApp").child("Messages"))        
+    twowayRef.$bindTo($scope, "twoWayMessages");
+    
+    
     $scope.url = FirebaseService.firebaseURL;
     $scope.title = FirebaseService.getTitle()
     $scope.chat = {message: ""} 
@@ -49,4 +84,9 @@ angular.module('myApp')
             text: msgToSave
         });
     }
+    
+    $scope.$watch('messages', function(value) {
+        console.log(value);
+    }, true)
+    
 });
