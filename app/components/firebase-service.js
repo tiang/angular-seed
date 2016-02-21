@@ -2,11 +2,16 @@ angular.module('myApp')
 .factory('FirebaseService', function() {
     var serviceTitle;
     var getTitleInServiceMethod = function() {
-                        if (this.serviceTitle == null)
-                            return "No title set"    
-                        else 
-                            return this.serviceTitle;
-                        };
+        console.log(this.firebaseURL);
+            var ref = new Firebase(this.firebaseURL);
+            
+            ref.on("value", function(data) {
+                if (data == null)
+                    return;
+                name = data.val().ChatApp.Title;
+                console.log(name);
+            })  
+        };
                 
     return {
         firebaseURL: "https://ngfeb.firebaseio.com",
@@ -17,8 +22,20 @@ angular.module('myApp')
         getTitle2: this.serviceTitle
     }
 })
-.controller('ChatAppController', function($scope,FirebaseService) {
+.controller('ChatAppController', function($scope,$timeout,FirebaseService) {
     FirebaseService.setTitle('My New Title')
+    
+    
+          var ref = new Firebase(FirebaseService.firebaseURL).child("ChatApp").child("Title");
+            
+            ref.on("value", function(data) {
+                if (data == null)
+                    return;
+                $timeout(function() {
+                    $scope.title = data.val();
+                })           
+            })  
+            
 
     $scope.url = FirebaseService.firebaseURL;
     $scope.title = FirebaseService.getTitle()
